@@ -24,10 +24,10 @@
 3. Definir do escopo, com telas, funcionalidades e recursos utilizados;
 4. Mapear dos botões e navegação entre as telas.
 
-## Fase 1: Fluxo de usuário (21/10/2026 — 21/10/2026) 🔁
+## Fase 1: Fluxo de usuário (21/10/2026 — 21/10/2026) ✅
 
-1. Criar uma tabela com todas as telas e o que cada botão faz; ✅
-2. Desenhar um grafo representando o fluxo de usuário; ✅
+1. Criar uma tabela com todas as telas e o que cada botão faz;
+2. Desenhar um grafo representando o fluxo de usuário;
 3. Documentar funcionalidades.
 
 ## Fase 2: Wireframes (22/10/2026 — 23/10/2026)
