@@ -30,23 +30,23 @@
 2. Desenhar um grafo representando o fluxo de usuário;
 3. Documentar funcionalidades.
 
-## Fase 2: Wireframes (22/10/2026 — 23/10/2026) 🔁
+## Fase 2: Wireframes (22/10/2026 — 23/10/2026) ✅
 
 1. Criar layout global da aplicação; ✅
 2. Criar componentes da página do grid de pokémons; ✅
 3. Desenhar página do descoberta de pokémons; ✅
-4. Desenhar página de detalhes do pokémon; 🔁
+4. Desenhar página de detalhes do pokémon; ✅
 
-## Fase 3: Cores e tema (23/10/2026 — 23/10/2026)
+## Fase 3: Cores e tema (23/10/2026 — 23/10/2026) ✅
 
-1. Definir tamanho de cada tela da pokédex;
-2. Definir cores e tipografia da interface;
-3. Transformar imagens em componentes interagíveis.
+1. Definir tamanho de cada tela da pokédex; ✅
+2. Definir cores e tipografia da interface; ✅
+3. Transformar imagens em componentes interagíveis. ✅
 
-## Fase 4: Protótipo navegável (26/10/2026 — 28/10/2026)
+## Fase 4: Protótipo navegável (26/10/2026 — 28/10/2026) 🔁
 
-1. Estilizar layout global da aplicação;
-2. Criar e posicionar componentes dos botões;
+1. Estilizar layout global da aplicação; 🔁
+2. Criar e posicionar componentes dos botões; ✅
 3. Estilizar página do desecoberta de pokémons;
 4. Estilizar página de detalhes do pokémon;
 5. Adicionar navegação entre telas pelos botões.
