@@ -45,11 +45,11 @@
 
 ## Fase 4: Protótipo navegável (26/10/2026 — 28/10/2026) 🔁
 
-1. Estilizar layout global da aplicação; 🔁
+1. Estilizar layout global da aplicação; ✅
 2. Criar e posicionar componentes dos botões; ✅
-3. Estilizar página do desecoberta de pokémons;
-4. Estilizar página de detalhes do pokémon;
-5. Adicionar navegação entre telas pelos botões.
+3. Estilizar página do descoberta de pokémons; ✅
+4. Estilizar página de detalhes do pokémon; 🔁
+5. Adicionar navegação entre telas pelos botões. 🔁
 
 ## Fase 6: Implementação, Shell Pokédex (29/10/2026 — 29/10/2026)
 
