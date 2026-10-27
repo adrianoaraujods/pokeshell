@@ -1,0 +1,15 @@
+@import url(./globals.css);
+@import url(./reset.css);
+
+body {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(44, 127, 162, 1) 100%
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,33 @@
+:root {
+  --shell: #d30a40;
+  --steel: #e1e1e1;
+  --screen: #5fc480;
+  --screen-off: #084035;
+  --info: #22c4e9;
+  --destructive: #cc0420;
+  --muted: #2c2c2c;
+  --shadow: #0e0e0e;
+
+  --text: 16px;
+  --text-sm: 12px;
+
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 16px;
+  --space-5: 32px;
+  --space-6: 64px;
+  --space-7: 128px;
+  --space-8: 256px;
+}
+
+body {
+  font-family:
+    "Silkscreen",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
