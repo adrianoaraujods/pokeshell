@@ -126,5 +126,74 @@ img.visor__img {
 
 .pokedex__right {
   position: absolute;
-  top: 0;
+  bottom: 41px;
+  right: 35px;
+
+  width: 533px;
+  height: 636px;
+
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  & #KEY-0 {
+    z-index: 9;
+    order: 5;
+    border-width: 1px 1px 2px 2px;
+    border-bottom-left-radius: var(--space-3);
+  }
+  & #KEY-1 {
+    z-index: 8;
+    order: 6;
+    border-width: 1px 1px 2px 1px;
+  }
+  & #KEY-2 {
+    z-index: 7;
+    order: 7;
+    border-width: 1px 1px 2px 1px;
+  }
+  & #KEY-3 {
+    z-index: 6;
+    order: 8;
+    border-width: 1px 1px 2px 1px;
+  }
+  & #KEY-4 {
+    z-index: 5;
+    order: 9;
+    border-width: 1px 2px 2px 1px;
+    border-bottom-right-radius: var(--space-3);
+  }
+  & #KEY-5 {
+    z-index: 4;
+    order: 1;
+    border-width: 2px 1px 1px 2px;
+    border-top-left-radius: var(--space-3);
+  }
+  & #KEY-6 {
+    z-index: 3;
+    order: 1;
+    border-width: 2px 1px 1px 1px;
+  }
+  & #KEY-7 {
+    z-index: 2;
+    order: 2;
+    border-width: 2px 1px 1px 1px;
+  }
+  & #KEY-8 {
+    z-index: 1;
+    order: 3;
+    border-width: 2px 1px 1px 1px;
+  }
+  & #KEY-9 {
+    z-index: 0;
+    order: 4;
+    border-width: 2px 2px 1px 1px;
+    border-top-right-radius: var(--space-3);
+  }
 }

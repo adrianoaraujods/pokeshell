@@ -9,6 +9,10 @@
   width: 100%;
 }
 
-.screen--secondary {
+.screen--info {
   aspect-ratio: 2/1;
+}
+
+.screen--secondary {
+  aspect-ratio: 8/3;
 }
