@@ -8,8 +8,8 @@
 | 1. Fluxo de usuário                  | 21/10/2026  | 21/10/2026 | 2h    | ✅       |
 | 2. Wireframes (Figma)                | 22/10/2026  | 23/10/2026 | 6h    | ✅       |
 | 3. Cores e tema (Figma)              | 23/10/2026  | 23/10/2026 | 2h    | ✅       |
-| 4. Protótipo navegável (Figma)       | 26/10/2026  | 28/10/2026 | 8h    | 🔁       |
-| 5. Implementação: Shell Pokédex      | 27/10/2026  | 27/10/2026 | 2h    | 🟠       |
+| 4. Protótipo navegável (Figma)       | 26/10/2026  | 28/10/2026 | 8h    | ✅       |
+| 5. Implementação: Shell Pokédex      | 27/10/2026  | 27/10/2026 | 2h    | 🔁       |
 | 6. Implementação: Tela de descoberta | 28/10/2026  | 28/10/2026 | 2h    | 🟠       |
 | 7. Implementação: Tela de detalhes   | 29/10/2026  | 29/10/2026 | 4h    | 🟠       |
 | 8. Documentação e Entrega Final      | 30/10/2026  | 30/10/2026 | 2h    | 🟠       |
@@ -42,19 +42,19 @@
 2. Definir cores e tipografia da interface; ✅
 3. Transformar imagens em componentes interagíveis. ✅
 
-## Fase 4: Protótipo navegável (26/10/2026 — 27/10/2026) 🔁
+## Fase 4: Protótipo navegável (26/10/2026 — 27/10/2026) ✅
 
 1. Estilizar layout global da aplicação; ✅
 2. Criar e posicionar componentes dos botões; ✅
 3. Estilizar página do descoberta de pokémons; ✅
-4. Estilizar página de detalhes do pokémon; 🔁
-5. Adicionar navegação entre telas pelos botões. 🔁
+4. Estilizar página de detalhes do pokémon; ✅
+5. Adicionar navegação entre telas pelos botões. ✅
 
-## Fase 5: Implementação, Shell Pokédex (28/10/2026 — 28/10/2026)
+## Fase 5: Implementação, Shell Pokédex (28/10/2026 — 28/10/2026) ✅
 
-1. Exportar imagens do Figma (SVGs);
-2. Enquadar shell da pokédex na págiana com containers em cada tela;
-3. Posicionar botões no shell;
+1. Exportar imagens do Figma (SVGs); ✅
+2. Enquadar shell da pokédex na págiana com containers em cada tela; ✅
+3. Posicionar botões no shell; 🔁
 4. Implementar seletor de linguagem;
 
 ## Fase 6: Implementação, Tela de descoberta (28/10/2026 — 28/10/2026)
