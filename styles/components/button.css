@@ -1,5 +1,9 @@
 .button {
+  background-color: var(--muted);
+  font-size: 0;
+
   border: 2px solid black;
+  cursor: pointer;
 
   --shadow-size: var(--space-2);
   box-shadow: calc(var(--shadow-size) * -1) var(--shadow-size) var(--shadow);
@@ -15,13 +19,29 @@
 .button--round {
   font-size: 0;
 
-  width: 56px;
-  height: 56px;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: 999px;
+}
+
+.button--pill {
+  width: 104px;
+  height: 24px;
   border-radius: 999px;
 
-  background-color: var(--muted);
+  --shadow-size: var(--space-1);
 }
 
 #LANG {
+  width: 56px;
+  height: 56px;
   background-color: var(--shell);
+}
+
+#BACK {
+  background-color: var(--destructive);
+}
+
+#TAB {
+  background-color: var(--info);
 }

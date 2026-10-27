@@ -25,7 +25,7 @@ body {
 }
 
 img.shell,
-img.visor {
+img.visor__img {
   user-select: none;
   -webkit-user-drag: none;
   -moz-user-select: none;
@@ -43,7 +43,8 @@ img.visor {
   left: 48px;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+
   padding: var(--space-4);
 }
 
@@ -95,6 +96,24 @@ img.visor {
     height: 4px;
     border-radius: 999px;
   }
+}
+
+.controls {
+  padding-top: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  justify-content: space-between;
+}
+
+.controls__row {
+  display: flex;
+  gap: var(--space-5);
 }
 
 .loading {
