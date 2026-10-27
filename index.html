@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en-US">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +14,37 @@
   </head>
 
   <body>
-    <main>
-      <img src="assets/shell.svg" />
+    <main class="pokedex">
+      <img class="shell" src="assets/shell.svg" />
+
+      <div class="pokedex__left">
+        <div class="visor">
+          <img class="visor" src="./assets/visor.svg" />
+
+          <div class="visor__content">
+            <div class="visor__column">
+              <section id="main-screen" class="screen screen--main">
+                <p class="loading">Loading...</p>
+              </section>
+
+              <div class="visor__row">
+                <button id="LANG" class="button button--round" type="button">
+                  Language
+                </button>
+
+                <figure class="grill">
+                  <rect></rect>
+                  <rect></rect>
+                  <rect></rect>
+                  <rect></rect>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pokedex__right"></div>
     </main>
   </body>
 </html>

@@ -1,6 +1,9 @@
 @import url(./globals.css);
 @import url(./reset.css);
 
+@import url(./components/screen.css);
+@import url(components/button.css);
+
 body {
   background-image: linear-gradient(
     to bottom,
@@ -12,4 +15,97 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.pokedex {
+  position: relative;
+
+  width: 1281px;
+  height: 932px;
+}
+
+img.shell,
+img.visor {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.pokedex__left {
+  position: absolute;
+
+  width: 546px;
+  height: 694px;
+
+  top: 200px;
+  left: 48px;
+
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.visor {
+  position: relative;
+  height: fit-content;
+  width: 100%;
+}
+
+.visor__content {
+  position: absolute;
+  inset: 0;
+  padding-left: 10px;
+}
+
+.visor__column {
+  height: 100%;
+  padding-top: var(--space-5);
+  max-width: 400px;
+  margin-inline: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.visor__row {
+  width: 100%;
+  height: 100%;
+  padding-left: var(--space-6);
+  margin-bottom: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grill {
+  width: var(--space-7);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+
+  rect {
+    background-color: black;
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+  }
+}
+
+.loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.pokedex__right {
+  position: absolute;
+  top: 0;
 }

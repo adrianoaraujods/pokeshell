@@ -1,0 +1,10 @@
+.screen {
+  background-color: var(--screen);
+  border: 3px solid black;
+  border-radius: var(--space-4);
+}
+
+.screen--main {
+  aspect-ratio: 4/3;
+  width: 100%;
+}
