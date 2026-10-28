@@ -1,7 +1,11 @@
 .screen {
-  background-color: var(--screen);
+  background-color: var(--screen-off);
   border: 3px solid black;
   border-radius: var(--space-4);
+
+  &[data-active="true"] {
+    background-color: var(--screen);
+  }
 }
 
 .screen--main {
@@ -15,4 +19,9 @@
 
 .screen--secondary {
   aspect-ratio: 8/3;
+}
+
+.screen--type {
+  aspect-ratio: 8/3;
+  width: 100%;
 }

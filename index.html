@@ -23,7 +23,11 @@
 
           <div class="visor__content">
             <div class="visor__column">
-              <section id="main-screen" class="screen screen--main">
+              <section
+                id="main-screen"
+                class="screen screen--main"
+                data-active="true"
+              >
                 <p class="loading">Loading...</p>
               </section>
 
@@ -80,6 +84,28 @@
           <button id="KEY-6" class="button button--square">6</button>
           <button id="KEY-8" class="button button--square">8</button>
           <button id="KEY-9" class="button button--square">9</button>
+        </div>
+
+        <div class="screen-buttons">
+          <button id="LEFT" class="button button--pill" type="button">
+            Left
+          </button>
+
+          <button id="Right" class="button button--pill" type="button">
+            Right
+          </button>
+        </div>
+
+        <div class="aux-buttons">
+          <button id="L" class="button button--square">L</button>
+          <button id="R" class="button button--square">R</button>
+
+          <img src="./assets/light.svg" />
+        </div>
+
+        <div class="type-screens">
+          <section class="screen screen--type"></section>
+          <section class="screen screen--type"></section>
         </div>
       </div>
     </main>

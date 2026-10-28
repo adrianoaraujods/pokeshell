@@ -197,3 +197,25 @@ img.visor__img {
     border-top-right-radius: var(--space-3);
   }
 }
+
+.screen-buttons {
+  margin-top: calc(var(--space-4) * -1);
+  display: flex;
+  justify-content: end;
+  gap: var(--space-4);
+}
+
+.aux-buttons {
+  display: flex;
+  align-items: center;
+
+  & img {
+    margin-left: auto;
+  }
+}
+
+.type-screens {
+  display: flex;
+  gap: var(--space-5);
+  justify-content: space-between;
+}
