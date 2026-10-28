@@ -20,17 +20,56 @@ body {
 .pokedex {
   position: relative;
 
-  width: 1281px;
-  height: 932px;
+  @media (max-width: 1280px) {
+    background-color: var(--shell);
+    border-radius: var(--space-5);
+    border: 3px solid black;
+    margin-block: var(--space-5);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      z-index: -1;
+      width: calc(100% + var(--space-5));
+      height: calc(100% + var(--space-5));
+
+      background-color: var(--shell-shadow);
+      border-radius: calc(var(--space-5) + 24px) var(--space-5);
+      border: 3px solid black;
+    }
+  }
+
+  @media (min-width: 1281px) {
+    width: 1281px;
+    height: 932px;
+  }
 }
 
 img.shell,
-img.visor__img {
+img.visor__img,
+img.lights {
   user-select: none;
   -webkit-user-drag: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.shell {
+  @media (max-width: 1280px) {
+    display: none;
+  }
+}
+
+.lights {
+  margin-top: -3px;
+  margin-left: -3px;
+
+  @media (min-width: 1281px) {
+    display: none;
+  }
 }
 
 .pokedex__left {
@@ -46,6 +85,10 @@ img.visor__img {
   flex-direction: column;
 
   padding: var(--space-4);
+
+  @media (max-width: 1280px) {
+    position: static;
+  }
 }
 
 .visor {
@@ -136,6 +179,10 @@ img.visor__img {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+
+  @media (max-width: 1280px) {
+    position: static;
+  }
 }
 
 .keyboard {
