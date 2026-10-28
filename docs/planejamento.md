@@ -9,8 +9,8 @@
 | 2. Wireframes (Figma)                | 22/10/2026  | 23/10/2026 | 6h    | ✅       |
 | 3. Cores e tema (Figma)              | 23/10/2026  | 23/10/2026 | 2h    | ✅       |
 | 4. Protótipo navegável (Figma)       | 26/10/2026  | 28/10/2026 | 8h    | ✅       |
-| 5. Implementação: Shell Pokédex      | 27/10/2026  | 27/10/2026 | 2h    | 🔁       |
-| 6. Implementação: Tela de descoberta | 28/10/2026  | 28/10/2026 | 2h    | 🟠       |
+| 5. Implementação: Shell Pokédex      | 27/10/2026  | 27/10/2026 | 2h    | ✅       |
+| 6. Implementação: Tela de descoberta | 28/10/2026  | 28/10/2026 | 2h    | 🔁       |
 | 7. Implementação: Tela de detalhes   | 29/10/2026  | 29/10/2026 | 4h    | 🟠       |
 | 8. Documentação e Entrega Final      | 30/10/2026  | 30/10/2026 | 2h    | 🟠       |
 
@@ -53,13 +53,13 @@
 ## Fase 5: Implementação, Shell Pokédex (28/10/2026 — 28/10/2026) ✅
 
 1. Exportar imagens do Figma (SVGs); ✅
-2. Enquadar shell da pokédex na págiana com containers em cada tela; ✅
-3. Posicionar botões no shell; 🔁
-4. Implementar seletor de linguagem;
+2. Enquadar shell da pokédex na página com containers em cada tela; ✅
+3. Posicionar botões no shell; ✅
+4. Implementar seletor de linguagem; ✅
 
-## Fase 6: Implementação, Tela de descoberta (28/10/2026 — 28/10/2026)
+## Fase 6: Implementação, Tela de descoberta (28/10/2026 — 28/10/2026) 🔁
 
-1. Criar layout com lista em formato de grid pokémons por geração;
+1. Criar layout com lista em formato de grid pokémons por geração; 🔁
 2. Implementar mudança de geração;
 3. Implementar scroll infinito;
 4. Mapear botões e interações;
