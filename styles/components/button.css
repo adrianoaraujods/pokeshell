@@ -38,10 +38,23 @@
   height: 56px;
 }
 
+#CONFIRM {
+  @media (max-width: 566px) {
+    position: absolute;
+    top: 72px;
+    left: calc((100% - 240px) / 2);
+  }
+}
+
 #LANG {
   width: 56px;
   height: 56px;
   background-color: var(--shell);
+
+  @media (max-width: 566px) {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 #BACK {
