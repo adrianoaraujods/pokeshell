@@ -38,16 +38,20 @@ function scrollBehavior() {
 
 /**
  * Scrolls a container by one page, rounded down to whole lines and landing on a line,
- * so no line is cut in half.
+ * so no line is cut in half. Lines start below the top padding.
  * @param {HTMLElement} container the scrollable element.
  * @param {-1 | 1} direction `-1` to page up or `1` to page down.
  */
 function page(container, direction) {
   const style = getComputedStyle(container);
-  const line = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
-  const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+  const line =
+    parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2 || 16;
+  const paddingTop = parseFloat(style.paddingTop) || 0;
+  const padding = paddingTop + (parseFloat(style.paddingBottom) || 0);
   const lines = Math.max(1, Math.floor((container.clientHeight - padding) / line));
-  const top = (Math.round(container.scrollTop / line) + direction * lines) * line;
+  const first = Math.max(0, Math.round((container.scrollTop - paddingTop) / line));
+  const next = first + direction * lines;
+  const top = next > 0 ? paddingTop + next * line : 0;
 
-  container.scrollTo({ top: Math.max(0, top), behavior: scrollBehavior() });
+  container.scrollTo({ top, behavior: scrollBehavior() });
 }

@@ -17,7 +17,8 @@ function renderReadout() {
 
 /**
  * Fetches the readout of the selected pokemon once the cursor rests. Only the latest
- * request renders, and a failed one keeps the last readout on screen.
+ * request renders, and a failed one clears the readout so it never sits next to
+ * another pokemon's info.
  */
 function scheduleReadout() {
   clearTimeout(readoutTimer);
@@ -36,7 +37,11 @@ function scheduleReadout() {
       if (request !== readoutRequest) return;
       readout = next;
       renderReadout();
-    } catch {}
+    } catch {
+      if (request !== readoutRequest) return;
+      readout = null;
+      renderReadout();
+    }
   }, READOUT_DELAY_MS);
 }
 

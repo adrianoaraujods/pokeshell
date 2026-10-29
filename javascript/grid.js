@@ -40,10 +40,11 @@ function onGridScroll() {
 }
 
 /**
- * Selects the pokemons of the current generation, keeping the cursor inside the new list.
+ * Selects the pokemons of the current generation that match the search, keeping the cursor
+ * inside the new list.
  */
 function filterGrid() {
-  filteredDex = dex.filter(inGen);
+  filteredDex = dex.filter((entry) => inGen(entry) && matchesQuery(entry));
   cursor = Math.max(0, Math.min(cursor, filteredDex.length - 1));
 }
 
@@ -54,6 +55,7 @@ function filterGrid() {
 function mountGrid() {
   const searchBar = mainScreen.querySelector("#search-bar");
   mainScreen.style.scrollPaddingTop = searchBar.offsetHeight + "px";
+  mountSearch();
   fillScreen();
   moveCursor(cursor, "auto");
 }

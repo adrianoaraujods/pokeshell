@@ -57,7 +57,12 @@ function discoverScreen() {
 <article id="discover-screen">
   <input id="search-bar" type="search" placeholder="${genLabel()} · ${t("search")}" />
   <ul class="list"></ul>
+  <p class="no-results${filteredDex.length ? " hidden" : ""}">${t("noResults")}</p>
 </article>`,
+    info: infoReadout(selected()),
+    secondary: secondaryReadout(),
+    type1: typeReadout(0),
+    type2: typeReadout(1),
     mount: mountGrid,
   };
 }

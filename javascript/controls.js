@@ -31,6 +31,7 @@ const KEYS = {
 };
 
 const DISCOVER_ACTIONS = {
+  tab: focusSearch,
   back: showNextGen,
   up: stepCursor,
   down: stepCursor,
@@ -51,6 +52,9 @@ const SCREEN_ACTIONS = new Map([
   [errorScreen, ERROR_ACTIONS],
 ]);
 
+let searchingAtPress = false;
+
+document.addEventListener("pointerdown", onPointerDown, true);
 document.addEventListener("click", onButtonClick);
 document.addEventListener("keydown", onKeyDown);
 
@@ -85,21 +89,43 @@ function handle(input) {
 }
 
 /**
- * Handles clicks on the pokedex buttons.
+ * Remembers whether the search bar was open, since pressing a pokedex button blurs it
+ * before the click lands and TAB must still toggle it closed.
+ */
+function onPointerDown() {
+  searchingAtPress = searching();
+}
+
+/**
+ * Handles clicks on the pokedex buttons. Any button leaves the search bar, as some
+ * browsers don't move focus to buttons, and TAB pressed while searching only closes it.
  * @param {MouseEvent} event the click event.
  */
 function onButtonClick(event) {
   const button = event.target.closest("button[id]");
   const input = button && buttonInput(button.id);
-  if (input) handle(input);
+  const wasSearching = searchingAtPress || searching();
+  searchingAtPress = false;
+  if (!input) return;
+
+  if (searching()) searchBar().blur();
+  if (input.type === "tab" && wasSearching) return;
+  handle(input);
 }
 
 /**
- * Handles the keyboard, leaving shortcuts and typing in text fields alone.
+ * Handles the keyboard, leaving shortcuts and typing in text fields alone. In the search
+ * bar only Tab and Esc are taken, and both return to the grid.
  * @param {KeyboardEvent} event the keydown event.
  */
 function onKeyDown(event) {
   if (event.ctrlKey || event.metaKey || event.altKey) return;
+  if (event.target.id === "search-bar") {
+    if (event.key !== "Tab" && event.key !== "Escape") return;
+    event.preventDefault(); // Esc would also clear a type="search" field
+    event.target.blur();
+    return;
+  }
   if (event.target.closest?.("input, textarea")) return;
 
   const input = keyInput(event.key);

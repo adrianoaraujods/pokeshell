@@ -6,6 +6,7 @@ const STRINGS = {
     error: "CONNECTION ERROR",
     retry: "PRESS CONFIRM TO RETRY",
     search: "TYPE NAME OR NUMBER...",
+    noResults: "NO RESULTS",
     gen: "GEN",
     all: "ALL",
     selected: "SELECTED",
