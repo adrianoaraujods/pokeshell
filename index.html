@@ -25,9 +25,7 @@
           <div class="visor__content">
             <div class="visor__column">
               <section class="screen screen--main" data-active="true">
-                <div id="main-screen" class="window">
-                  <article id="loading-screen">Loading...</article>
-                </div>
+                <div id="main-screen" class="window"></div>
               </section>
 
               <div class="visor__row">
@@ -48,7 +46,7 @@
 
         <div class="controls">
           <button id="CONFIRM" class="button button--round" type="button">
-            Language
+            Confirm
           </button>
 
           <div class="controls__column">
@@ -73,7 +71,7 @@
 
       <div class="pokedex__right">
         <section class="screen screen--secondary">
-          <div id="screen-secondary" class="window"></div>
+          <div id="secondary-screen" class="window"></div>
         </section>
 
         <div class="keyboard">
@@ -94,7 +92,7 @@
             Left
           </button>
 
-          <button id="Right" class="button button--pill" type="button">
+          <button id="RIGHT" class="button button--pill" type="button">
             Right
           </button>
         </div>
@@ -117,6 +115,9 @@
       </div>
     </main>
 
-    <script src="./javascript/script.js"></script>
+    <script src="./javascript/utils.js" defer></script>
+    <script src="./javascript/locale.js" defer></script>
+    <script src="./javascript/screens.js" defer></script>
+    <script src="./javascript/script.js" defer></script>
   </body>
 </html>

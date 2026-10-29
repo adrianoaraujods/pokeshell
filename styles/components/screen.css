@@ -44,7 +44,12 @@
   }
 }
 
-#loading-screen {
+#loading-screen,
+#error-screen {
+  height: 100%;
+  padding: var(--space-4);
+  text-align: center;
+
   display: flex;
   align-items: center;
   justify-content: center;
