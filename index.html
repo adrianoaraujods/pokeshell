@@ -24,12 +24,10 @@
 
           <div class="visor__content">
             <div class="visor__column">
-              <section
-                id="main-screen"
-                class="screen screen--main"
-                data-active="true"
-              >
-                <p class="loading">Loading...</p>
+              <section class="screen screen--main" data-active="true">
+                <div id="main-screen" class="window">
+                  <article id="loading-screen">Loading...</article>
+                </div>
               </section>
 
               <div class="visor__row">
@@ -64,7 +62,9 @@
               </button>
             </div>
 
-            <section class="screen screen--info"></section>
+            <section class="screen screen--info" data-active="true">
+              <div id="info-screen" class="window"></div>
+            </section>
           </div>
 
           <img class="d-pad" src="./assets/dpad.svg" />
@@ -72,7 +72,9 @@
       </div>
 
       <div class="pokedex__right">
-        <section class="screen screen--secondary"></section>
+        <section class="screen screen--secondary">
+          <div id="screen-secondary" class="window"></div>
+        </section>
 
         <div class="keyboard">
           <button id="KEY-0" class="button button--square">0</button>
@@ -105,10 +107,16 @@
         </div>
 
         <div class="type-screens">
-          <section class="screen screen--type"></section>
-          <section class="screen screen--type"></section>
+          <section class="screen screen--type">
+            <div id="type-screen-1" class="window"></div>
+          </section>
+          <section class="screen screen--type">
+            <div id="type-screen-2" class="window"></div>
+          </section>
         </div>
       </div>
     </main>
+
+    <script src="./javascript/script.js"></script>
   </body>
 </html>

@@ -24,9 +24,9 @@ h6 {
 }
 
 /* Remove list styles on ul, ol, menu elements with a list role, which suggests default styling will be removed */
-ul[role="list"],
-ol[role="list"],
-menu[role="list"] {
+ul :not([role="list"]),
+ol :not([role="list"]),
+menu :not([role="list"]) {
   list-style: none;
 }
 

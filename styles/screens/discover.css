@@ -1,0 +1,33 @@
+#search-bar {
+  position: sticky;
+  top: 0;
+
+  width: 100%;
+  padding: var(--space-1) var(--space-3);
+
+  background-color: var(--surface);
+  border-bottom: var(--space-2) solid var(--screen);
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.66);
+  }
+}
+
+.list {
+  padding: var(--space-4);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: var(--space-4);
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: small;
+}
