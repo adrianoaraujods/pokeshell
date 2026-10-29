@@ -1,8 +1,18 @@
+let language = "en";
+
 const STRINGS = {
   en: {
     loading: "LOADING…",
     error: "CONNECTION ERROR",
+    retry: "PRESS CONFIRM TO RETRY",
     search: "TYPE NAME OR NUMBER...",
+    gen: "GEN",
+    all: "ALL",
+    selected: "SELECTED",
+    generation: "GENERATION",
+    language: "LANGUAGE",
+    description: "DESCRIPTION",
+    effectiveness: "TYPE EFFECTIVENESS",
   },
 };
 

@@ -31,6 +31,7 @@
   gap: var(--space-2);
   font-size: small;
   text-align: center;
+  scroll-margin: var(--space-4);
 
   & img {
     width: 64px;
@@ -41,5 +42,55 @@
 
   & p {
     overflow-wrap: anywhere;
+  }
+
+  &.cursor {
+    outline: 2px solid var(--info);
+    outline-offset: -2px;
+  }
+}
+
+.info-readout {
+  padding: var(--space-4);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+#secondary-screen:not(:empty) {
+  padding: var(--space-4);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.effectiveness {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1ch;
+
+  & dt {
+    text-align: right;
+  }
+}
+
+.type-readout {
+  margin: auto;
+  text-transform: uppercase;
+}
+
+.skeleton {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: var(--space-3);
+  animation: skeleton-pulse 0.9s infinite alternate;
+}
+
+@keyframes skeleton-pulse {
+  to {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
   }
 }

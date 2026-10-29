@@ -214,11 +214,46 @@ img.lights {
 }
 
 .d-pad {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  align-self: center;
+  width: 151px;
+  aspect-ratio: 1;
+
   @media (max-width: 566px) {
     position: absolute;
     top: 72px;
     right: calc((100% - 240px) / 2);
   }
+}
+
+.d-pad__img {
+  grid-area: 1 / 1 / 4 / 4;
+  width: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.d-pad__button {
+  background-color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+
+#D-UP {
+  grid-area: 1 / 2;
+}
+
+#D-LEFT {
+  grid-area: 2 / 1;
+}
+
+#D-RIGHT {
+  grid-area: 2 / 3;
+}
+
+#D-DOWN {
+  grid-area: 3 / 2;
 }
 
 .controls__row {
