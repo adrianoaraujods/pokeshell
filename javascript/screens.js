@@ -117,7 +117,10 @@ function secondaryReadout() {
   }
 
   const rows = readout.effectiveness
-    .map(([label, names]) => `<dt>${label}</dt><dd>${names.map(pretty).join(", ")}</dd>`)
+    .map(
+      ([label, names]) =>
+        `<dt>${label}</dt><dd>${names.map(pretty).join(", ")}</dd>`,
+    )
     .join("");
 
   return `
@@ -136,4 +139,106 @@ function typeReadout(slot) {
   if (!readout) return "";
   const type = readout.types[slot];
   return `<p class="type-readout">${type ? pretty(type) : "-"}</p>`;
+}
+
+/**
+ * The tab bar of the details screen, pinned to the top with the active tab highlighted.
+ * @param {string[]} keys the locale keys of the tabs.
+ * @param {number} active the position of the active tab.
+ * @returns {string} the tab bar html.
+ */
+function tabBar(keys, active) {
+  const tabs = keys
+    .map(
+      (key, i) =>
+        `<li class="tab-bar__tab"${i === active ? ' aria-current="true"' : ""}>${t(key)}</li>`,
+    )
+    .join("");
+  return `<ul class="tab-bar">${tabs}</ul>`;
+}
+
+/**
+ * A `< X >` switcher line, which D-pad left and right cycle.
+ * @param {string} label the current choice.
+ * @returns {string} the switcher html.
+ */
+function switcher(label) {
+  return `<p class="switcher"><span>&lt;</span> ${label} <span>&gt;</span></p>`;
+}
+
+/**
+ * The details of the selected pokemon: a pinned tab bar over the active tab.
+ * @returns {object} the screen content.
+ */
+function detailsScreen() {
+  const entry = selected();
+
+  return {
+    main: `
+<article id="details-screen">
+  ${tabBar(DETAIL_TABS, detailTab)}
+  <div class="tab-body">${detailBody(entry)}</div>
+</article>`,
+    info: infoReadout(entry),
+    secondary: secondaryReadout(),
+    type1: typeReadout(0),
+    type2: typeReadout(1),
+    mount: () => loadInfo(entry),
+  };
+}
+
+/**
+ * The body of the active tab, with a placeholder for tabs that don't exist yet.
+ * @param {{id: number, name: string}} entry the viewed dex entry.
+ * @returns {string} the tab body html.
+ */
+function detailBody(entry) {
+  if (DETAIL_TABS[detailTab] !== "info") return "";
+  if (infoFailed) return `<p class="placeholder">${t("error")}</p>`;
+  if (!info || info.id !== entry.id)
+    return `<p class="placeholder">${t("loading")}</p>`;
+  return infoTab(entry, info);
+}
+
+/**
+ * The INFO tab: identity and size, the form line, and the species facts.
+ * @param {{id: number, name: string}} entry the viewed dex entry.
+ * @param {object} data the species facts.
+ * @returns {string} the tab html.
+ */
+function infoTab(entry, data) {
+  const gender = data.gender
+    ? `(${t("male")}) ${data.gender.male}% / (${t("female")}) ${data.gender.female}%`
+    : t("genderless");
+  const facts = [
+    [
+      t("abilities"),
+      data.abilities.map((name) => name.toUpperCase()).join(", "),
+    ],
+    [t("habitat"), data.habitat ? pretty(data.habitat) : "-"],
+    [t("eggGroups"), data.eggGroups.map(pretty).join(", ") || "-"],
+    [t("captureRate"), data.captureRate],
+    [t("gender"), gender],
+  ]
+    .map(([label, value]) => `<li>${label}: ${value}</li>`)
+    .join("");
+
+  return `
+<div class="identity">
+  <img
+    class="skeleton"
+    src="${spriteUrl(entry.id)}"
+    data-fallback="${staticSpriteUrl(entry.id)}"
+    alt="${entry.name} sprite"
+  />
+  <div>
+    <p>N° ${entry.id}</p>
+    <p>${pretty(entry.name)}</p>
+    <p class="genus">${data.genus}</p>
+    <p class="size">${t("height")} ${data.height} M</p>
+    <p class="size">${t("weight")} ${data.weight} KG</p>
+  </div>
+</div>
+${switcher(t("normal"))}
+<ul class="facts">${facts}</ul>`;
 }

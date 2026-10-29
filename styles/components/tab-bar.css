@@ -1,0 +1,21 @@
+.tab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  display: flex;
+  background-color: var(--surface);
+}
+
+.tab-bar__tab {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  text-align: center;
+  font-size: small;
+  letter-spacing: 0.1em;
+
+  &[aria-current="true"] {
+    background-color: var(--screen-off);
+    color: var(--screen);
+  }
+}

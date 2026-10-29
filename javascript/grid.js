@@ -3,6 +3,7 @@ const NEAR_END_PX = 300;
 
 let filteredDex = [];
 let cursor = 0;
+let gridScroll = 0;
 
 mainScreen.addEventListener("scroll", onGridScroll, { passive: true });
 mainScreen.addEventListener("load", onSpriteLoad, true);

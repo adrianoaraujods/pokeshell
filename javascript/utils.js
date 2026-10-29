@@ -55,3 +55,23 @@ function page(container, direction) {
 
   container.scrollTo({ top, behavior: scrollBehavior() });
 }
+
+/**
+ * Splits PokeAPI's gender rate into the share of each gender.
+ * @param {number} rate the species gender rate: the chance of female in eighths, or `-1` when genderless.
+ * @returns {{male: number, female: number} | null} the percentages, or `null` when genderless.
+ */
+function genderRatio(rate) {
+  if (rate < 0) return null;
+  const female = (rate / 8) * 100;
+  return { male: 100 - female, female };
+}
+
+/**
+ * Formats a PokeAPI height or weight, given in tenths, as a plain number.
+ * @param {number} tenths the value in decimetres or hectograms.
+ * @returns {string} the value in metres or kilograms, e.g. `0.4`.
+ */
+function fromTenths(tenths) {
+  return String(tenths / 10);
+}

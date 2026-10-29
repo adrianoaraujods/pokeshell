@@ -1,0 +1,5 @@
+.switcher {
+  display: flex;
+  gap: 1ch;
+  text-transform: uppercase;
+}

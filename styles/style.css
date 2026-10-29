@@ -4,7 +4,11 @@
 @import url(./components/screen.css);
 @import url(./components/button.css);
 
+@import url(./components/tab-bar.css);
+@import url(./components/switcher.css);
+
 @import url(./screens/discover.css);
+@import url(./screens/details.css);
 
 body {
   min-width: 360px;

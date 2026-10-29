@@ -31,6 +31,7 @@ const KEYS = {
 };
 
 const DISCOVER_ACTIONS = {
+  confirm: openDetails,
   tab: focusSearch,
   back: showNextGen,
   up: stepCursor,
@@ -43,12 +44,24 @@ const DISCOVER_ACTIONS = {
   "page-down": () => page(secondaryScreen, 1),
 };
 
+const DETAILS_ACTIONS = {
+  tab: nextTab,
+  back: closeDetails,
+  up: () => page(mainScreen, -1),
+  down: () => page(mainScreen, 1),
+  "flip-left": () => flipReadout("description"),
+  "flip-right": () => flipReadout("effectiveness"),
+  "page-up": () => page(secondaryScreen, -1),
+  "page-down": () => page(secondaryScreen, 1),
+};
+
 const ERROR_ACTIONS = {
   confirm: () => main(),
 };
 
 const SCREEN_ACTIONS = new Map([
   [discoverScreen, DISCOVER_ACTIONS],
+  [detailsScreen, DETAILS_ACTIONS],
   [errorScreen, ERROR_ACTIONS],
 ]);
 

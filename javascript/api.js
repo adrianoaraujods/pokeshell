@@ -78,3 +78,28 @@ async function fetchReadout(id) {
     effectiveness: typeEffectiveness(types),
   };
 }
+
+/**
+ * Fetches the species facts the INFO tab shows about a pokemon.
+ * @param {number} id the pokemon id.
+ * @returns {Promise<{genus: string, height: string, weight: string, abilities: string[], habitat: string, eggGroups: string[], captureRate: number, gender: {male: number, female: number} | null}>} the pokemon info.
+ */
+async function fetchInfo(id) {
+  const [species, pokemon] = await Promise.all([
+    getJSON(API + "pokemon-species/" + id + "/"),
+    getJSON(API + "pokemon/" + id + "/"),
+  ]);
+  const genus = pickByLang(species.genera, language);
+  const abilities = [...pokemon.abilities].sort((a, b) => a.slot - b.slot);
+
+  return {
+    genus: genus ? genus.genus : "",
+    height: fromTenths(pokemon.height),
+    weight: fromTenths(pokemon.weight),
+    abilities: abilities.map(({ ability }) => ability.name),
+    habitat: species.habitat?.name ?? "",
+    eggGroups: species.egg_groups.map((group) => group.name),
+    captureRate: species.capture_rate,
+    gender: genderRatio(species.gender_rate),
+  };
+}
