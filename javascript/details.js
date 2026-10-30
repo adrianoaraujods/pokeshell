@@ -1,6 +1,7 @@
 const DETAIL_TABS = ["info", "evolutions", "stats", "moves"];
 
 let detailTab = 0;
+let formIndex = 0;
 let info = null;
 let infoFailed = false;
 let infoRequest = 0;
@@ -15,6 +16,7 @@ function openDetails() {
 
   gridScroll = mainScreen.scrollTop;
   detailTab = 0;
+  formIndex = 0;
   infoFailed = false;
   display(detailsScreen);
 }
@@ -24,6 +26,10 @@ function openDetails() {
  */
 function closeDetails() {
   infoRequest++;
+  if (formIndex) {
+    formIndex = 0;
+    applyFormReadout();
+  }
   display(discoverScreen);
   mainScreen.scrollTop = gridScroll;
 }
@@ -65,4 +71,33 @@ function renderDetails() {
 function nextTab() {
   detailTab = (detailTab + 1) % DETAIL_TABS.length;
   renderDetails();
+}
+
+/**
+ * Gives the readout the types and effectiveness of the viewed form, if both are loaded.
+ */
+function applyFormReadout() {
+  const form = info?.id === selected()?.id ? info.forms[formIndex] : null;
+  if (!readout || !form) return;
+  readout = {
+    ...readout,
+    types: form.types,
+    effectiveness: form.effectiveness,
+  };
+}
+
+/**
+ * Cycles the INFO form, wrapping at both ends, and everything that follows the form.
+ * @param {-1 | 1} direction `-1` for the previous form or `1` for the next.
+ */
+function stepForm(direction) {
+  const count = info?.id === selected()?.id ? info.forms.length : 0;
+  if (DETAIL_TABS[detailTab] !== "info" || count < 2) return;
+
+  formIndex = (formIndex + direction + count) % count;
+  applyFormReadout();
+  const top = mainScreen.scrollTop;
+  renderDetails();
+  mainScreen.scrollTop = top;
+  renderReadout();
 }

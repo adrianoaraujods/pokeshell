@@ -160,10 +160,13 @@ function tabBar(keys, active) {
 /**
  * A `< X >` switcher line, which D-pad left and right cycle.
  * @param {string} label the current choice.
+ * @param {boolean} cycles whether there is anything to cycle to; arrows are hidden otherwise.
  * @returns {string} the switcher html.
  */
-function switcher(label) {
-  return `<p class="switcher"><span>&lt;</span> ${label} <span>&gt;</span></p>`;
+function switcher(label, cycles = true) {
+  const arrow = (glyph) =>
+    `<span${cycles ? "" : " hidden"}>${glyph}</span>`;
+  return `<p class="switcher">${arrow("&lt;")} ${label} ${arrow("&gt;")}</p>`;
 }
 
 /**
@@ -207,13 +210,14 @@ function detailBody(entry) {
  * @returns {string} the tab html.
  */
 function infoTab(entry, data) {
+  const form = data.forms[formIndex] ?? data.forms[0];
   const gender = data.gender
     ? `(${t("male")}) ${data.gender.male}% / (${t("female")}) ${data.gender.female}%`
     : t("genderless");
   const facts = [
     [
       t("abilities"),
-      data.abilities.map((name) => name.toUpperCase()).join(", "),
+      form.abilities.map((name) => name.toUpperCase()).join(", "),
     ],
     [t("habitat"), data.habitat ? pretty(data.habitat) : "-"],
     [t("eggGroups"), data.eggGroups.map(pretty).join(", ") || "-"],
@@ -227,18 +231,18 @@ function infoTab(entry, data) {
 <div class="identity">
   <img
     class="skeleton"
-    src="${spriteUrl(entry.id)}"
-    data-fallback="${staticSpriteUrl(entry.id)}"
+    src="${spriteUrl(form.id)}"
+    data-fallback="${staticSpriteUrl(form.id)}"
     alt="${entry.name} sprite"
   />
   <div>
     <p>N° ${entry.id}</p>
     <p>${pretty(entry.name)}</p>
     <p class="genus">${data.genus}</p>
-    <p class="size">${t("height")} ${data.height} M</p>
-    <p class="size">${t("weight")} ${data.weight} KG</p>
+    <p class="size">${t("height")} ${form.height} M</p>
+    <p class="size">${t("weight")} ${form.weight} KG</p>
   </div>
 </div>
-${switcher(t("normal"))}
+${switcher(form.isDefault ? t("normal") : pretty(form.name), data.forms.length > 1)}
 <ul class="facts">${facts}</ul>`;
 }

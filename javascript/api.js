@@ -68,35 +68,73 @@ async function fetchReadout(id) {
     getJSON(API + "pokemon-species/" + id + "/"),
     getJSON(API + "pokemon/" + id + "/"),
   ]);
-  const slots = [...pokemon.types].sort((a, b) => a.slot - b.slot);
-  const types = await Promise.all(slots.map((slot) => getJSON(slot.type.url)));
   const flavor = pickByLang(species.flavor_text_entries, language);
 
   return {
     description: flavor ? cleanText(flavor.flavor_text) : "",
+    ...(await fetchTyping(pokemon)),
+  };
+}
+
+/**
+ * Fetches the types of a pokemon and how effective each battle type is against it.
+ * @param {{types: {slot: number, type: {url: string}}[]}} pokemon the PokeAPI pokemon resource.
+ * @returns {Promise<{types: string[], effectiveness: [string, string[]][]}>} the typing.
+ */
+async function fetchTyping(pokemon) {
+  const slots = [...pokemon.types].sort((a, b) => a.slot - b.slot);
+  const types = await Promise.all(slots.map((slot) => getJSON(slot.type.url)));
+
+  return {
     types: types.map((type) => type.name),
     effectiveness: typeEffectiveness(types),
   };
 }
 
 /**
- * Fetches the species facts the INFO tab shows about a pokemon.
- * @param {number} id the pokemon id.
- * @returns {Promise<{genus: string, height: string, weight: string, abilities: string[], habitat: string, eggGroups: string[], captureRate: number, gender: {male: number, female: number} | null}>} the pokemon info.
+ * Fetches one form (PokeAPI variety) of a species, with everything a form changes.
+ * @param {{name: string, url: string}} variety the species variety.
+ * @param {string} species the species name.
+ * @param {boolean} isDefault whether it is the default form.
+ * @returns {Promise<{id: number, name: string, isDefault: boolean, height: string, weight: string, abilities: string[], stats: {name: string, value: number}[], types: string[], effectiveness: [string, string[]][]}>} the form.
  */
-async function fetchInfo(id) {
-  const [species, pokemon] = await Promise.all([
-    getJSON(API + "pokemon-species/" + id + "/"),
-    getJSON(API + "pokemon/" + id + "/"),
-  ]);
-  const genus = pickByLang(species.genera, language);
+async function fetchForm(variety, species, isDefault) {
+  const pokemon = await getJSON(variety.url);
   const abilities = [...pokemon.abilities].sort((a, b) => a.slot - b.slot);
 
   return {
-    genus: genus ? genus.genus : "",
+    id: pokemon.id,
+    name: isDefault ? "" : variety.name.slice(species.length + 1),
+    isDefault,
     height: fromTenths(pokemon.height),
     weight: fromTenths(pokemon.weight),
     abilities: abilities.map(({ ability }) => ability.name),
+    stats: pokemon.stats.map((stat) => ({
+      name: stat.stat.name,
+      value: stat.base_stat,
+    })),
+    ...(await fetchTyping(pokemon)),
+  };
+}
+
+/**
+ * Fetches the species facts the INFO tab shows about a pokemon.
+ * @param {number} id the pokemon id.
+ * @returns {Promise<{genus: string, forms: object[], habitat: string, eggGroups: string[], captureRate: number, gender: {male: number, female: number} | null}>} the pokemon info.
+ */
+async function fetchInfo(id) {
+  const species = await getJSON(API + "pokemon-species/" + id + "/");
+  const genus = pickByLang(species.genera, language);
+  const forms = await Promise.all(
+    species.varieties.map(({ is_default, pokemon }) =>
+      fetchForm(pokemon, species.name, is_default),
+    ),
+  );
+  forms.sort((a, b) => b.isDefault - a.isDefault);
+
+  return {
+    genus: genus ? genus.genus : "",
+    forms,
     habitat: species.habitat?.name ?? "",
     eggGroups: species.egg_groups.map((group) => group.name),
     captureRate: species.capture_rate,

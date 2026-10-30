@@ -36,6 +36,7 @@ function scheduleReadout() {
       const next = await fetchReadout(entry.id);
       if (request !== readoutRequest) return;
       readout = next;
+      applyFormReadout();
       renderReadout();
     } catch {
       if (request !== readoutRequest) return;

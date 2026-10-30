@@ -49,6 +49,8 @@ const DETAILS_ACTIONS = {
   back: closeDetails,
   up: () => page(mainScreen, -1),
   down: () => page(mainScreen, 1),
+  left: () => stepForm(-1),
+  right: () => stepForm(1),
   "flip-left": () => flipReadout("description"),
   "flip-right": () => flipReadout("effectiveness"),
   "page-up": () => page(secondaryScreen, -1),
