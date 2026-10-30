@@ -64,7 +64,16 @@ const ERROR_ACTIONS = {
   confirm: () => main(),
 };
 
+const LANGUAGE_ACTIONS = {
+  up: stepLanguage,
+  down: stepLanguage,
+  confirm: applyLanguage,
+  back: () => closeLanguageMenu(),
+  language: () => closeLanguageMenu(),
+};
+
 const SCREEN_ACTIONS = new Map([
+  [languageScreen, LANGUAGE_ACTIONS],
   [discoverScreen, DISCOVER_ACTIONS],
   [detailsScreen, DETAILS_ACTIONS],
   [errorScreen, ERROR_ACTIONS],
@@ -103,6 +112,10 @@ function keyInput(key) {
  * @param {{type: string, value?: number}} input the input.
  */
 function handle(input) {
+  if (input.type === "language" && currentScreen !== languageScreen) {
+    openLanguageMenu();
+    return;
+  }
   SCREEN_ACTIONS.get(currentScreen)?.[input.type]?.(input);
 }
 

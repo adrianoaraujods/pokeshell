@@ -82,7 +82,7 @@ function card(entry) {
     alt="${entry.name} sprite"
     loading="lazy"
   />
-  <p>${entry.id}-${pretty(entry.name)}</p>
+  <p>${entry.id}-${displayName(entry)}</p>
 </li>`;
 }
 
@@ -96,7 +96,7 @@ function infoReadout(entry) {
   return `
 <article class="info-readout">
   <p>${t("selected")}:</p>
-  <p>N° <span class="pokemon-number">${entry.id}</span> - <span class="pokemon-name">${pretty(entry.name)}</span></p>
+  <p>N° <span class="pokemon-number">${entry.id}</span> - <span class="pokemon-name">${displayName(entry)}</span></p>
   <p>${t("generation")}: <span class="pokemon-generation">${ROMAN[genOf(entry.id) - 1]}</span></p>
   <p>${t("language")}: <span class="selected-language">${language.toUpperCase()}</span></p>
 </article>`;
@@ -196,7 +196,7 @@ function detailsScreen() {
   ${tabBar(DETAIL_TABS, detailTab)}
   <div class="tab-body">${detailBody(entry)}</div>
 </article>`,
-    info: infoReadout(entry),
+    info: infoReadout(viewed()),
     secondary: secondaryReadout(),
     type1: typeReadout(0),
     type2: typeReadout(1),
@@ -254,7 +254,7 @@ function infoTab(entry, data) {
   />
   <div>
     <p>N° ${entry.id}</p>
-    <p>${pretty(entry.name)}</p>
+    <p>${displayName(entry)}</p>
     <p class="genus">${data.genus}</p>
     <p class="size">${t("height")} ${form.height} M</p>
     <p class="size">${t("weight")} ${form.weight} KG</p>
@@ -275,7 +275,7 @@ function evolutionsTab() {
   const member = evolution[evoIndex];
   const line = (key, other, details) => {
     const how = evolutionText(details);
-    return `<li>${t(key)}: ${pretty(other.name)}${how ? " - " + how : ""}</li>`;
+    return `<li>${t(key)}: ${displayName(other)}${how ? " - " + how : ""}</li>`;
   };
   const lines = [
     ...(member.from ? [line("from", member.from, member.details)] : []),
@@ -292,10 +292,10 @@ function evolutionsTab() {
   />
   <div>
     <p>N° ${member.id}</p>
-    <p>${pretty(member.name)}</p>
+    <p>${displayName(member)}</p>
   </div>
 </div>
-${switcher(pretty(member.name), evolution.length > 1)}
+${switcher(displayName(member), evolution.length > 1)}
 ${lines ? `<ul class="facts">${lines}</ul>` : `<p class="placeholder">${t("noEvolutions")}</p>`}`;
 }
 
@@ -309,7 +309,7 @@ function statsTab() {
     .map(
       ({ name, value }) => `
 <li class="stat">
-  <span class="stat__name">${pretty(name)}</span>
+  <span class="stat__name">${t(name)}</span>
   <span class="stat__value">${value}</span>
   <span class="stat__bar" style="--value: ${value}"></span>
 </li>`,

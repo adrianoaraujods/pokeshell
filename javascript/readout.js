@@ -37,6 +37,7 @@ function scheduleReadout(entry = selected()) {
       if (request !== readoutRequest) return;
       readout = next;
       applyFormReadout();
+      infoScreen.innerHTML = infoReadout(entry);
       renderReadout();
     } catch {
       if (request !== readoutRequest) return;

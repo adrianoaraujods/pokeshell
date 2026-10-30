@@ -45,6 +45,29 @@ function showDetails(entry) {
 }
 
 /**
+ * Forgets what was fetched in the previous language, so the details load again in the new one.
+ */
+function relocalizeDetails() {
+  infoRequest++;
+  evoRequest++;
+  info = null;
+  abilityEffects.clear();
+  evolution = null;
+  evoIndex = 0;
+  evoFailed = false;
+  infoFailed = false;
+}
+
+/**
+ * Picks the details up again after the language menu: the readout and, on the EVOL. tab,
+ * the family are loaded again.
+ */
+function resumeDetails() {
+  renderViewed();
+  if (DETAIL_TABS[detailTab] === "evolutions") loadEvolution(detailEntry);
+}
+
+/**
  * Jumps from the EVOL. tab to the INFO tab of the family member on show.
  */
 function confirmMember() {

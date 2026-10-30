@@ -9,6 +9,7 @@
 
 @import url(./screens/discover.css);
 @import url(./screens/details.css);
+@import url(./screens/language.css);
 
 body {
   min-width: 360px;

@@ -11,7 +11,11 @@ function matchesQuery(entry) {
   const q = query.trim().toLowerCase();
   if (!q) return true;
   if (/^\d+$/.test(q) && Number(q) === entry.id) return true;
-  return entry.name.includes(q) || entry.name.replace(/-/g, " ").includes(q);
+  return (
+    entry.name.includes(q) ||
+    entry.name.replace(/-/g, " ").includes(q) ||
+    displayName(entry).toLowerCase().includes(q)
+  );
 }
 
 /**

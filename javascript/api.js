@@ -92,21 +92,56 @@ async function fetchAll() {
   return await getJSON(DEX_URL);
 }
 
+const API_LANGUAGES = {
+  en: ["en"],
+  es: ["es"],
+  "pt-BR": ["pt-br"],
+  ja: ["ja", "ja-hrkt"],
+};
+const localNames = {};
+
 /**
  * Pick an entry of a PokeAPI localized list, falling back to English.
  * @param {object[]} list the localized entries.
- * @param {string} lang the desired language.
+ * @param {string} lang the desired language, as an app language code.
  * @returns {object | null} the entry in the desired language, in English or `null`.
  */
 function pickByLang(list, lang = "en") {
+  const wanted = API_LANGUAGES[lang] ?? [lang];
+  let best = null;
+  let rank = wanted.length;
   let fallback = null;
 
   for (const entry of list) {
-    if (entry.language.name === lang) return entry;
-    if (entry.language.name === "en") fallback = entry;
+    const place = wanted.indexOf(entry.language.name);
+    if (place !== -1 && place < rank) {
+      best = entry;
+      rank = place;
+    }
+    if (entry.language.name === "en" && !fallback) fallback = entry;
   }
 
-  return fallback;
+  return best ?? fallback;
+}
+
+/**
+ * Remembers the name of a species in the current language, so it shows wherever the
+ * pokemon does. English keeps the names derived from the dex slugs.
+ * @param {{id: number, names: object[]}} species the PokeAPI species.
+ */
+function rememberName(species) {
+  const name = pickByLang(species.names, language);
+  if (!name || name.language.name === "en") return;
+  (localNames[language] ??= new Map()).set(species.id, pretty(name.name));
+}
+
+/**
+ * Names a pokemon in the current language, as far as its species has been loaded.
+ * @param {{id: number, name: string}} entry the dex entry.
+ * @returns {string} the display name.
+ */
+function displayName(entry) {
+  return localNames[language]?.get(entry.id) ?? pretty(entry.name);
 }
 
 /**
@@ -138,6 +173,7 @@ async function fetchReadout(id) {
     getJSON(API + "pokemon/" + id + "/"),
   ]);
   const flavor = pickByLang(species.flavor_text_entries, language);
+  rememberName(species);
 
   return {
     description: flavor ? cleanText(flavor.flavor_text) : "",
@@ -199,7 +235,21 @@ async function fetchEvolutions(id) {
   }
 
   const { chain } = await getJSON(species.evolution_chain.url);
-  return evolutionMembers(chain);
+  const members = evolutionMembers(chain);
+  if (language !== "en") await rememberNames(members);
+  return members;
+}
+
+/**
+ * Looks up the names of family members in the current language, skipping any that fail.
+ * @param {{id: number}[]} members the family members.
+ */
+async function rememberNames(members) {
+  await Promise.all(
+    members.map(({ id }) =>
+      getJSON(API + "pokemon-species/" + id + "/").then(rememberName, () => {}),
+    ),
+  );
 }
 
 /**
@@ -224,6 +274,7 @@ async function fetchAbilityEffect(name) {
 async function fetchInfo(id) {
   const species = await getJSON(API + "pokemon-species/" + id + "/");
   const genus = pickByLang(species.genera, language);
+  rememberName(species);
   const forms = await Promise.all(
     species.varieties.map(({ is_default, pokemon }) =>
       fetchForm(pokemon, species.name, is_default),
