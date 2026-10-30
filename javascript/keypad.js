@@ -13,6 +13,7 @@ function typeDigit(input) {
 
   const typed = keypad + input.value;
   keypadRejected = Number(typed) > MAX_DEX;
+  if (keypadRejected) beep("error");
   keypad = keypadRejected ? "" : typed;
   renderReadout();
 }
@@ -39,6 +40,7 @@ function lookupKeypad() {
   keypadRejected = !entry;
 
   if (!entry) {
+    beep("error");
     renderReadout();
     return;
   }

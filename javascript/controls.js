@@ -112,6 +112,7 @@ function keyInput(key) {
  * @param {{type: string, value?: number}} input the input.
  */
 function handle(input) {
+  beep(input.type);
   if (input.type === "language" && currentScreen !== languageScreen) {
     openLanguageMenu();
     return;

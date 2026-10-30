@@ -34,6 +34,7 @@ function openDetails(entry = selected()) {
  */
 function showDetails(entry) {
   evoRequest++;
+  playCry(entry.id);
   detailEntry = entry;
   detailTab = 0;
   formIndex = 0;
@@ -68,11 +69,15 @@ function resumeDetails() {
 }
 
 /**
- * Jumps from the EVOL. tab to the INFO tab of the family member on show.
+ * Jumps from the EVOL. tab to the INFO tab of the family member on show. Anywhere else,
+ * or on the pokemon already open, it cries again.
  */
 function confirmMember() {
   const member = viewed();
-  if (DETAIL_TABS[detailTab] !== "evolutions" || member.id === detailEntry.id) return;
+  if (DETAIL_TABS[detailTab] !== "evolutions" || member.id === detailEntry.id) {
+    playCry(member.id);
+    return;
+  }
 
   showDetails(member);
   mainScreen.scrollTop = 0;
