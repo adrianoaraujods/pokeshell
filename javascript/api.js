@@ -2,17 +2,86 @@ const API = "https://pokeapi.co/api/v2/";
 const SPRITES =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 const MAX_DEX = 1025;
+const DEX_URL = API + "pokemon-species/?limit=" + MAX_DEX;
+
+const CACHE_KEY = "pokedex-cache";
+const CACHE_SAVE_DELAY_MS = 500;
+
+const cache = loadCache();
+const pending = new Map();
+let cacheTimer = 0;
 
 /**
- * Fetches a PokeAPI resource.
+ * Reads the cache saved by earlier visits, which is empty when storage is unavailable or
+ * holds something else.
+ * @returns {Map<string, any>} the response bodies by url.
+ */
+function loadCache() {
+  try {
+    return new Map(Object.entries(JSON.parse(localStorage.getItem(CACHE_KEY) ?? "{}")));
+  } catch {
+    return new Map();
+  }
+}
+
+/**
+ * Saves the cache shortly after the last new response, so a burst of lookups writes once.
+ */
+function scheduleCacheSave() {
+  clearTimeout(cacheTimer);
+  cacheTimer = setTimeout(saveCache, CACHE_SAVE_DELAY_MS);
+}
+
+/**
+ * Writes the cache to storage. When it doesn't fit, the oldest half of the lookups is
+ * dropped until it does, always keeping the dex list every visit starts with. When
+ * storage is unavailable the device just goes on without it.
+ */
+function saveCache() {
+  const pinned = [...cache].filter(([url]) => url === DEX_URL);
+  let rest = [...cache].filter(([url]) => url !== DEX_URL);
+
+  for (;;) {
+    try {
+      const entries = [...pinned, ...rest];
+      localStorage.setItem(CACHE_KEY, JSON.stringify(Object.fromEntries(entries)));
+      return;
+    } catch {
+      if (!rest.length) return;
+      rest = rest.slice(Math.ceil(rest.length / 2));
+    }
+  }
+}
+
+/**
+ * Fetches a PokeAPI resource, from the local cache when it was fetched before. Requests
+ * for a url already on its way share that request.
  * @param {string} url the resource url.
  * @returns {Promise<any>} the parsed JSON body.
  * @throws {Error} when the response is not successful.
  */
-async function getJSON(url) {
+function getJSON(url) {
+  if (cache.has(url)) return Promise.resolve(cache.get(url));
+  if (!pending.has(url)) {
+    pending.set(url, requestJSON(url).finally(() => pending.delete(url)));
+  }
+  return pending.get(url);
+}
+
+/**
+ * Fetches a PokeAPI resource from the network and caches it.
+ * @param {string} url the resource url.
+ * @returns {Promise<any>} the parsed JSON body.
+ * @throws {Error} when the response is not successful.
+ */
+async function requestJSON(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error("HTTP " + res.status);
-  return res.json();
+
+  const body = await res.json();
+  cache.set(url, body);
+  scheduleCacheSave();
+  return body;
 }
 
 /**
@@ -20,7 +89,7 @@ async function getJSON(url) {
  * @returns {Promise<{results: {name: string, url: string}[]}>} the species list of the national dex.
  */
 async function fetchAll() {
-  return await getJSON(API + "pokemon-species/?limit=" + MAX_DEX);
+  return await getJSON(DEX_URL);
 }
 
 /**
