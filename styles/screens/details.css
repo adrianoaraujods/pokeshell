@@ -43,3 +43,43 @@
     content: "· ";
   }
 }
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  font-size: small;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+}
+
+.stat__value {
+  text-align: right;
+}
+
+/* The mask is anchored at the left of every full-width bar, so segments line up across rows. */
+.stat__bar {
+  --segment: 6px;
+  --gap: 2px;
+
+  grid-column: 1 / -1;
+  height: var(--space-3);
+  background:
+    linear-gradient(var(--screen-off), var(--screen-off)) 0 0 / calc(var(--value) / 255 * 100%) 100% no-repeat,
+    var(--surface);
+  -webkit-mask: repeating-linear-gradient(
+    90deg,
+    #000 0 var(--segment),
+    transparent var(--segment) calc(var(--segment) + var(--gap))
+  );
+  mask: repeating-linear-gradient(
+    90deg,
+    #000 0 var(--segment),
+    transparent var(--segment) calc(var(--segment) + var(--gap))
+  );
+}

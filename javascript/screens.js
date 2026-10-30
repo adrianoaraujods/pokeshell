@@ -198,11 +198,11 @@ function detailsScreen() {
 function detailBody(entry) {
   const tab = DETAIL_TABS[detailTab];
   if (tab === "evolutions") return evolutionsTab();
-  if (tab !== "info") return "";
+  if (tab !== "info" && tab !== "stats") return "";
   if (infoFailed) return `<p class="placeholder">${t("error")}</p>`;
   if (!info || info.id !== entry.id)
     return `<p class="placeholder">${t("loading")}</p>`;
-  return infoTab(entry, info);
+  return tab === "stats" ? statsTab() : infoTab(entry, info);
 }
 
 /**
@@ -282,4 +282,24 @@ function evolutionsTab() {
 </div>
 ${switcher(pretty(member.name), evolution.length > 1)}
 ${lines ? `<ul class="facts">${lines}</ul>` : `<p class="placeholder">${t("noEvolutions")}</p>`}`;
+}
+
+/**
+ * The STATS tab: the base stats of the selected form, each with a segmented bar.
+ * @returns {string} the tab html.
+ */
+function statsTab() {
+  const form = info.forms[formIndex] ?? info.forms[0];
+  const rows = form.stats
+    .map(
+      ({ name, value }) => `
+<li class="stat">
+  <span class="stat__name">${pretty(name)}</span>
+  <span class="stat__value">${value}</span>
+  <span class="stat__bar" style="--value: ${value}"></span>
+</li>`,
+    )
+    .join("");
+
+  return `<ul class="stats">${rows}</ul>`;
 }
