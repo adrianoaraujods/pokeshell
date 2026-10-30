@@ -149,6 +149,7 @@ function stepCursor(input) {
 function moveCursor(index, behavior = scrollBehavior()) {
   mainScreen.querySelector(".card.cursor")?.classList.remove("cursor");
   cursor = index;
+  keypadRejected = false;
 
   const card = renderUntil(index);
   card?.classList.add("cursor");

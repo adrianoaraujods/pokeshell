@@ -35,6 +35,8 @@ const STRINGS = {
     trade: "TRADE",
     hold: "HOLD",
     happiness: "HAPPINESS",
+    number: "NUMBER",
+    invalidNumber: "INVALID NUMBER",
     noEvolutions: "NO EVOLUTIONS",
     lv: "LV",
     noMoves: "NO LEVEL-UP MOVES",

@@ -31,9 +31,10 @@ const KEYS = {
 };
 
 const DISCOVER_ACTIONS = {
-  confirm: openDetails,
+  confirm: confirmDiscover,
+  digit: typeDigit,
   tab: focusSearch,
-  back: showNextGen,
+  back: backDiscover,
   up: stepCursor,
   down: stepCursor,
   left: stepCursor,
@@ -45,9 +46,10 @@ const DISCOVER_ACTIONS = {
 };
 
 const DETAILS_ACTIONS = {
-  confirm: confirmMember,
+  confirm: confirmDetails,
+  digit: typeDigit,
   tab: nextTab,
-  back: closeDetails,
+  back: backDetails,
   up: () => page(mainScreen, -1),
   down: () => page(mainScreen, 1),
   left: () => stepSwitcher(-1),

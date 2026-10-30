@@ -13,15 +13,19 @@ let infoFailed = false;
 let infoRequest = 0;
 
 /**
- * Opens the details of the pokemon under the cursor, remembering where the grid was
- * scrolled so BACK can return to it.
+ * Opens the details of a pokemon, remembering where the grid was scrolled so BACK can
+ * return to it. From the details themselves it jumps to another pokemon.
+ * @param {{id: number, name: string} | null} entry the dex entry, by default the one under the cursor.
  */
-function openDetails() {
-  const entry = selected();
+function openDetails(entry = selected()) {
   if (!entry) return;
 
-  gridScroll = mainScreen.scrollTop;
+  const fromDetails = currentScreen === detailsScreen;
+  const jumping = fromDetails || entry.id !== selected()?.id;
+  if (!fromDetails) gridScroll = mainScreen.scrollTop;
+  if (jumping) readout = null;
   showDetails(entry);
+  if (jumping) scheduleReadout(entry);
 }
 
 /**
@@ -29,6 +33,7 @@ function openDetails() {
  * @param {{id: number, name: string}} entry the dex entry to show.
  */
 function showDetails(entry) {
+  evoRequest++;
   detailEntry = entry;
   detailTab = 0;
   formIndex = 0;
@@ -46,7 +51,6 @@ function confirmMember() {
   const member = viewed();
   if (DETAIL_TABS[detailTab] !== "evolutions" || member.id === detailEntry.id) return;
 
-  evoRequest++;
   showDetails(member);
   mainScreen.scrollTop = 0;
 }

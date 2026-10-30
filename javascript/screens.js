@@ -107,6 +107,20 @@ function infoReadout(entry) {
  * @returns {string} the readout html, or empty when there is no readout.
  */
 function secondaryReadout() {
+  if (keypad) {
+    return `
+<article class="readout">
+  <p>${t("number")}:</p>
+  <p>N° ${keypad}_</p>
+</article>`;
+  }
+  if (keypadRejected) {
+    return `
+<article class="readout">
+  <p>${t("invalidNumber")}</p>
+  <p>1 - ${MAX_DEX}</p>
+</article>`;
+  }
   if (!readout) return "";
   if (readoutPage === "description") {
     return `
