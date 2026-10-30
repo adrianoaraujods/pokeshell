@@ -1,7 +1,12 @@
 const DETAIL_TABS = ["info", "evolutions", "stats", "moves"];
 
+let detailEntry = null;
 let detailTab = 0;
 let formIndex = 0;
+let evolution = null;
+let evoIndex = 0;
+let evoFailed = false;
+let evoRequest = 0;
 let info = null;
 let infoFailed = false;
 let infoRequest = 0;
@@ -15,10 +20,34 @@ function openDetails() {
   if (!entry) return;
 
   gridScroll = mainScreen.scrollTop;
+  showDetails(entry);
+}
+
+/**
+ * Shows the INFO tab of a pokemon, forgetting the form and family of the previous one.
+ * @param {{id: number, name: string}} entry the dex entry to show.
+ */
+function showDetails(entry) {
+  detailEntry = entry;
   detailTab = 0;
   formIndex = 0;
+  evolution = null;
+  evoIndex = 0;
+  evoFailed = false;
   infoFailed = false;
   display(detailsScreen);
+}
+
+/**
+ * Jumps from the EVOL. tab to the INFO tab of the family member on show.
+ */
+function confirmMember() {
+  const member = viewed();
+  if (DETAIL_TABS[detailTab] !== "evolutions" || member.id === detailEntry.id) return;
+
+  evoRequest++;
+  showDetails(member);
+  mainScreen.scrollTop = 0;
 }
 
 /**
@@ -26,11 +55,15 @@ function openDetails() {
  */
 function closeDetails() {
   infoRequest++;
+  evoRequest++;
+  const previewing = viewed()?.id !== selected()?.id;
   if (formIndex) {
     formIndex = 0;
     applyFormReadout();
   }
+  if (previewing) readout = null;
   display(discoverScreen);
+  if (previewing) scheduleReadout();
   mainScreen.scrollTop = gridScroll;
 }
 
@@ -69,15 +102,94 @@ function renderDetails() {
  * Moves to the next tab: INFO, EVOL., STATS, MOVES, then back to INFO.
  */
 function nextTab() {
+  const previewing = viewed()?.id !== detailEntry.id;
+  evoRequest++;
   detailTab = (detailTab + 1) % DETAIL_TABS.length;
   renderDetails();
+  if (previewing) renderViewed();
+  if (DETAIL_TABS[detailTab] === "evolutions") openEvolutions(detailEntry);
+}
+
+/**
+ * Finds the pokemon the details are showing: the selected family member on the EVOL. tab,
+ * the one under the cursor otherwise.
+ * @returns {{id: number, name: string} | null} the viewed dex entry.
+ */
+function viewed() {
+  const member = DETAIL_TABS[detailTab] === "evolutions" && evolution?.[evoIndex];
+  return member ? { id: member.id, name: member.name } : detailEntry;
+}
+
+/**
+ * Renders the info, secondary and type screens for the viewed pokemon.
+ */
+function renderViewed() {
+  const entry = viewed();
+  infoScreen.innerHTML = infoReadout(entry);
+  scheduleReadout(entry);
+}
+
+/**
+ * Opens the EVOL. tab on the pokemon under the cursor, fetching its family if needed.
+ * @param {{id: number, name: string}} entry the viewed dex entry.
+ */
+function openEvolutions(entry) {
+  if (!evolution) {
+    loadEvolution(entry);
+    return;
+  }
+  evoIndex = Math.max(0, evolution.findIndex((member) => member.id === entry.id));
+  renderDetails();
+}
+
+/**
+ * Fetches the evolution family and renders the EVOL. tab once it arrives. Only the latest
+ * request renders.
+ * @param {{id: number, name: string}} entry the viewed dex entry.
+ */
+async function loadEvolution(entry) {
+  const request = ++evoRequest;
+
+  try {
+    const members = await fetchEvolutions(entry.id);
+    if (request !== evoRequest) return;
+    evolution = members;
+    evoIndex = Math.max(0, members.findIndex((member) => member.id === entry.id));
+    evoFailed = false;
+  } catch {
+    if (request !== evoRequest) return;
+    evoFailed = true;
+  }
+  renderDetails();
+}
+
+/**
+ * Cycles the viewed family member on the EVOL. tab, wrapping at both ends.
+ * @param {-1 | 1} direction `-1` for the previous member or `1` for the next.
+ */
+function stepMember(direction) {
+  const count = evolution?.length ?? 0;
+  if (DETAIL_TABS[detailTab] !== "evolutions" || count < 2) return;
+
+  evoIndex = (evoIndex + direction + count) % count;
+  renderDetails();
+  renderViewed();
+}
+
+/**
+ * Cycles the switcher of the active tab: forms on INFO, family members on EVOL.
+ * @param {-1 | 1} direction `-1` for the previous choice or `1` for the next.
+ */
+function stepSwitcher(direction) {
+  stepForm(direction);
+  stepMember(direction);
 }
 
 /**
  * Gives the readout the types and effectiveness of the viewed form, if both are loaded.
  */
 function applyFormReadout() {
-  const form = info?.id === selected()?.id ? info.forms[formIndex] : null;
+  const form = info?.id === viewed()?.id ? info.forms[formIndex] : null;
   if (!readout || !form) return;
   readout = {
     ...readout,
@@ -91,7 +203,7 @@ function applyFormReadout() {
  * @param {-1 | 1} direction `-1` for the previous form or `1` for the next.
  */
 function stepForm(direction) {
-  const count = info?.id === selected()?.id ? info.forms.length : 0;
+  const count = info?.id === detailEntry.id ? info.forms.length : 0;
   if (DETAIL_TABS[detailTab] !== "info" || count < 2) return;
 
   formIndex = (formIndex + direction + count) % count;

@@ -118,6 +118,21 @@ async function fetchForm(variety, species, isDefault) {
 }
 
 /**
+ * Fetches the evolution family a pokemon belongs to.
+ * @param {number} id the pokemon id.
+ * @returns {Promise<ReturnType<typeof evolutionMembers>>} the family members, or the pokemon alone when it has no chain.
+ */
+async function fetchEvolutions(id) {
+  const species = await getJSON(API + "pokemon-species/" + id + "/");
+  if (!species.evolution_chain) {
+    return [{ id, name: species.name, details: [], from: null, to: [] }];
+  }
+
+  const { chain } = await getJSON(species.evolution_chain.url);
+  return evolutionMembers(chain);
+}
+
+/**
  * Fetches the species facts the INFO tab shows about a pokemon.
  * @param {number} id the pokemon id.
  * @returns {Promise<{genus: string, forms: object[], habitat: string, eggGroups: string[], captureRate: number, gender: {male: number, female: number} | null}>} the pokemon info.

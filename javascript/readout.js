@@ -16,14 +16,14 @@ function renderReadout() {
 }
 
 /**
- * Fetches the readout of the selected pokemon once the cursor rests. Only the latest
- * request renders, and a failed one clears the readout so it never sits next to
- * another pokemon's info.
+ * Fetches the readout of a pokemon once the cursor rests. Only the latest request
+ * renders, and a failed one clears the readout so it never sits next to another
+ * pokemon's info.
+ * @param {{id: number, name: string} | null} entry the pokemon to read out, by default the one under the cursor.
  */
-function scheduleReadout() {
+function scheduleReadout(entry = selected()) {
   clearTimeout(readoutTimer);
   const request = ++readoutRequest;
-  const entry = selected();
 
   if (!entry) {
     readout = null;

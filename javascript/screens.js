@@ -174,7 +174,7 @@ function switcher(label, cycles = true) {
  * @returns {object} the screen content.
  */
 function detailsScreen() {
-  const entry = selected();
+  const entry = detailEntry;
 
   return {
     main: `
@@ -196,7 +196,9 @@ function detailsScreen() {
  * @returns {string} the tab body html.
  */
 function detailBody(entry) {
-  if (DETAIL_TABS[detailTab] !== "info") return "";
+  const tab = DETAIL_TABS[detailTab];
+  if (tab === "evolutions") return evolutionsTab();
+  if (tab !== "info") return "";
   if (infoFailed) return `<p class="placeholder">${t("error")}</p>`;
   if (!info || info.id !== entry.id)
     return `<p class="placeholder">${t("loading")}</p>`;
@@ -245,4 +247,39 @@ function infoTab(entry, data) {
 </div>
 ${switcher(form.isDefault ? t("normal") : pretty(form.name), data.forms.length > 1)}
 <ul class="facts">${facts}</ul>`;
+}
+
+/**
+ * The EVOL. tab: the viewed family member and how it evolves from and into the others.
+ * @returns {string} the tab html.
+ */
+function evolutionsTab() {
+  if (evoFailed) return `<p class="placeholder">${t("error")}</p>`;
+  if (!evolution) return `<p class="placeholder">${t("loading")}</p>`;
+
+  const member = evolution[evoIndex];
+  const line = (key, other, details) => {
+    const how = evolutionText(details);
+    return `<li>${t(key)}: ${pretty(other.name)}${how ? " - " + how : ""}</li>`;
+  };
+  const lines = [
+    ...(member.from ? [line("from", member.from, member.details)] : []),
+    ...member.to.map((next) => line("to", next, next.details)),
+  ].join("");
+
+  return `
+<div class="identity">
+  <img
+    class="skeleton"
+    src="${spriteUrl(member.id)}"
+    data-fallback="${staticSpriteUrl(member.id)}"
+    alt="${member.name} sprite"
+  />
+  <div>
+    <p>N° ${member.id}</p>
+    <p>${pretty(member.name)}</p>
+  </div>
+</div>
+${switcher(pretty(member.name), evolution.length > 1)}
+${lines ? `<ul class="facts">${lines}</ul>` : `<p class="placeholder">${t("noEvolutions")}</p>`}`;
 }

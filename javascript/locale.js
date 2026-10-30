@@ -29,6 +29,13 @@ const STRINGS = {
     male: "M",
     female: "F",
     normal: "NORMAL",
+    from: "FROM",
+    to: "TO",
+    level: "LEVEL",
+    trade: "TRADE",
+    hold: "HOLD",
+    happiness: "HAPPINESS",
+    noEvolutions: "NO EVOLUTIONS",
   },
 };
 
