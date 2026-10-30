@@ -242,9 +242,11 @@ function stepSwitcher(direction) {
 
 /**
  * Gives the readout the types and effectiveness of the viewed form, if both are loaded.
+ * Only the details show forms; the grid readout is always the default form.
  */
 function applyFormReadout() {
-  const form = info?.id === viewed()?.id ? info.forms[formIndex] : null;
+  if (currentScreen !== detailsScreen || !info || info.id !== viewed()?.id) return;
+  const form = info.forms[formIndex];
   if (!readout || !form) return;
   readout = {
     ...readout,
