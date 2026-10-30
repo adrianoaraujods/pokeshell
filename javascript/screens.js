@@ -198,11 +198,12 @@ function detailsScreen() {
 function detailBody(entry) {
   const tab = DETAIL_TABS[detailTab];
   if (tab === "evolutions") return evolutionsTab();
-  if (tab !== "info" && tab !== "stats") return "";
+  if (!["info", "stats", "moves"].includes(tab)) return "";
   if (infoFailed) return `<p class="placeholder">${t("error")}</p>`;
   if (!info || info.id !== entry.id)
     return `<p class="placeholder">${t("loading")}</p>`;
-  return tab === "stats" ? statsTab() : infoTab(entry, info);
+  if (tab === "stats") return statsTab();
+  return tab === "moves" ? movesTab() : infoTab(entry, info);
 }
 
 /**
@@ -302,4 +303,33 @@ function statsTab() {
     .join("");
 
   return `<ul class="stats">${rows}</ul>`;
+}
+
+/**
+ * The MOVES tab: the abilities of the selected form with their effects, then the
+ * level-up moves of the latest generation. Moves come from the default form, as the
+ * API lists none for alternate forms such as megas.
+ * @returns {string} the tab html.
+ */
+function movesTab() {
+  const form = info.forms[formIndex] ?? info.forms[0];
+  const abilities = form.abilities
+    .map((name) => {
+      const effect = abilityEffects.get(name);
+      return `<li>${pretty(name)}${effect ? " – " + effect : ""}</li>`;
+    })
+    .join("");
+  const moves = info.forms[0].moves
+    .map(({ name, level }) => `<li>${t("lv")} ${level || "–"} ${pretty(name)}</li>`)
+    .join("");
+
+  return `
+<section>
+  <p>${t("abilities")}</p>
+  <ul class="facts">${abilities}</ul>
+</section>
+<section>
+  <p>${t("moves")}</p>
+  ${moves ? `<ul class="moves">${moves}</ul>` : `<p class="placeholder">${t("noMoves")}</p>`}
+</section>`;
 }

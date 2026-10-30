@@ -36,6 +36,8 @@ const STRINGS = {
     hold: "HOLD",
     happiness: "HAPPINESS",
     noEvolutions: "NO EVOLUTIONS",
+    lv: "LV",
+    noMoves: "NO LEVEL-UP MOVES",
   },
 };
 

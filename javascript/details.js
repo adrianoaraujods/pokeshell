@@ -7,6 +7,7 @@ let evolution = null;
 let evoIndex = 0;
 let evoFailed = false;
 let evoRequest = 0;
+let abilityEffects = new Map();
 let info = null;
 let infoFailed = false;
 let infoRequest = 0;
@@ -88,6 +89,32 @@ async function loadInfo(entry) {
   const top = mainScreen.scrollTop;
   renderDetails();
   mainScreen.scrollTop = top;
+  loadAbilityEffects();
+}
+
+/**
+ * Fetches the effects of the viewed form's abilities that aren't known yet and renders
+ * them on the MOVES tab. An ability that fails to load keeps showing by name only.
+ */
+async function loadAbilityEffects() {
+  const form = info?.id === detailEntry.id && info.forms[formIndex];
+  if (DETAIL_TABS[detailTab] !== "moves" || !form) return;
+
+  const missing = form.abilities.filter((name) => !abilityEffects.has(name));
+  if (!missing.length) return;
+
+  await Promise.all(
+    missing.map(async (name) => {
+      try {
+        abilityEffects.set(name, await fetchAbilityEffect(name));
+      } catch {}
+    }),
+  );
+  if (DETAIL_TABS[detailTab] !== "moves" || info?.id !== detailEntry.id) return;
+
+  const top = mainScreen.scrollTop;
+  renderDetails();
+  mainScreen.scrollTop = top;
 }
 
 /**
@@ -108,6 +135,7 @@ function nextTab() {
   renderDetails();
   if (previewing) renderViewed();
   if (DETAIL_TABS[detailTab] === "evolutions") openEvolutions(detailEntry);
+  if (DETAIL_TABS[detailTab] === "moves") loadAbilityEffects();
 }
 
 /**

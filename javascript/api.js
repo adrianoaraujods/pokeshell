@@ -96,7 +96,7 @@ async function fetchTyping(pokemon) {
  * @param {{name: string, url: string}} variety the species variety.
  * @param {string} species the species name.
  * @param {boolean} isDefault whether it is the default form.
- * @returns {Promise<{id: number, name: string, isDefault: boolean, height: string, weight: string, abilities: string[], stats: {name: string, value: number}[], types: string[], effectiveness: [string, string[]][]}>} the form.
+ * @returns {Promise<{id: number, name: string, isDefault: boolean, height: string, weight: string, abilities: string[], moves: {name: string, level: number}[], stats: {name: string, value: number}[], types: string[], effectiveness: [string, string[]][]}>} the form.
  */
 async function fetchForm(variety, species, isDefault) {
   const pokemon = await getJSON(variety.url);
@@ -109,6 +109,7 @@ async function fetchForm(variety, species, isDefault) {
     height: fromTenths(pokemon.height),
     weight: fromTenths(pokemon.weight),
     abilities: abilities.map(({ ability }) => ability.name),
+    moves: levelUpMoves(pokemon.moves),
     stats: pokemon.stats.map((stat) => ({
       name: stat.stat.name,
       value: stat.base_stat,
@@ -130,6 +131,20 @@ async function fetchEvolutions(id) {
 
   const { chain } = await getJSON(species.evolution_chain.url);
   return evolutionMembers(chain);
+}
+
+/**
+ * Fetches the one-line effect of an ability, falling back to its flavor text.
+ * @param {string} name the ability name.
+ * @returns {Promise<string>} the effect, or empty when the ability has none.
+ */
+async function fetchAbilityEffect(name) {
+  const ability = await getJSON(API + "ability/" + name + "/");
+  const effect = pickByLang(ability.effect_entries, language);
+  if (effect?.short_effect) return cleanText(effect.short_effect);
+
+  const flavor = pickByLang(ability.flavor_text_entries, language);
+  return flavor ? cleanText(flavor.flavor_text) : "";
 }
 
 /**
