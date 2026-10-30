@@ -2,7 +2,7 @@
 
 ## Visão geral
 
-| Fase                                 | Data Início | Data Fim   | Horas | Situação |
+| Fase                                 | Data Início | Data Fim   | Tempo | Situação |
 | ------------------------------------ | ----------- | ---------- | ----- | -------- |
 | 0. Planejamento                      | 20/10/2026  | 21/10/2026 | 2h    | ✅       |
 | 1. Fluxo de usuário                  | 21/10/2026  | 21/10/2026 | 2h    | ✅       |
@@ -11,8 +11,9 @@
 | 4. Protótipo navegável (Figma)       | 26/10/2026  | 28/10/2026 | 8h    | ✅       |
 | 5. Implementação: Shell Pokédex      | 27/10/2026  | 27/10/2026 | 2h    | ✅       |
 | 6. Implementação: Tela de descoberta | 28/10/2026  | 29/10/2026 | 6h    | ✅       |
-| 7. Implementação: Tela de detalhes   | 29/10/2026  | 30/10/2026 | 4h    | 🔁       |
-| 8. Documentação e Entrega Final      | 30/10/2026  | 30/10/2026 | 2h    | 🟠       |
+| 7. Implementação: Tela de detalhes   | 29/10/2026  | 30/10/2026 | 2h    | ✅       |
+| 8. Interações e UX                   | 29/10/2026  | 30/10/2026 | 1h30  | ✅       |
+| 9. Documentação e Entrega Final      | 30/10/2026  | 30/10/2026 | 30min | ✅       |
 
 ---
 
@@ -65,16 +66,23 @@
 4. Mapear botões e interações; ✅
 5. Implementar barra de pesquisa; ✅
 
-## Fase 7: Implementação, Tela de detalhes (29/10/2026 — 30/10/2026) 🔁
+## Fase 7: Implementação, Tela de detalhes (29/10/2026 — 30/10/2026) ✅
 
 1. Implementar aba de Informações; ✅
-2. Implementar switcher de forma (Variantes, Mega...);
-3. Implementar aba de Evoluções;
-4. Implementar aba de Stats;
-5. Implementar aba de Habilidades e Movimentos;
+2. Implementar switcher de forma (Variantes, Mega...); ✅
+3. Implementar aba de Evoluções; ✅
+4. Implementar aba de Stats; ✅
+5. Implementar aba de Habilidades e Movimentos; ✅
 
-## Fase 8: Documentação e Entrega Final (30/10/2026 — 30/10/2026)
+## Fase 8: Interações e UX (30/10/2026 — 30/10/2026) ✅
 
-1. Documentar como foi feita a implementação;
-2. Documentar estrutura do projeto;
-3. Adicionar referências externas.
+6. Implementar atalho por número no keypad; ✅
+7. Implementar cache das respostas da API em `localStorage`; ✅
+8. Implementar menu de idiomas (en, es, pt-BR, ja); ✅
+9. Implementar audio nas interações e grito dos pokémons; ✅
+
+## Fase 8: Documentação e Entrega Final (30/10/2026 — 30/10/2026) ✅
+
+1. Documentar como foi feita a implementação; ✅ ([arquitetura](arquitetura.md))
+2. Documentar estrutura do projeto; ✅ ([README](../README.md))
+3. Adicionar referências externas. ✅ ([README](../README.md#referências))
