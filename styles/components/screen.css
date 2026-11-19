@@ -33,6 +33,7 @@
   flex-direction: column;
 
   overflow: auto;
+  overscroll-behavior: contain; /* reaching the end doesn't scroll the page */
 
   &:not(:empty) {
     height: 100%;
