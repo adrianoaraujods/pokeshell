@@ -4,6 +4,7 @@
 
   border: 2px solid black;
   cursor: pointer;
+  touch-action: manipulation; /* no double-tap zoom when pressed repeatedly */
 
   --shadow-size: var(--space-2);
   box-shadow: calc(var(--shadow-size) * -1) var(--shadow-size) var(--shadow);

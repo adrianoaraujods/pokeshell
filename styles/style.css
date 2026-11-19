@@ -243,6 +243,7 @@ img.lights {
   background-color: transparent;
   font-size: 0;
   cursor: pointer;
+  touch-action: manipulation; /* no double-tap zoom when pressed repeatedly */
 }
 
 #D-UP {
