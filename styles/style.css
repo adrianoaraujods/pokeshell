@@ -372,3 +372,140 @@ img.lights {
   gap: var(--space-5);
   justify-content: space-between;
 }
+
+@media (max-width: 460px) {
+  .pokedex {
+    height: 100dvh;
+    padding: 0 var(--space-4) var(--space-4);
+
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) 132px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "lights lights lights"
+      "visor visor visor"
+      "info info types"
+      "confirm pills dpad"
+      "aux aux dpad"
+      "readout readout readout"
+      "pages pages pages";
+    gap: var(--space-3);
+  }
+
+  .pokedex__left,
+  .pokedex__right,
+  .controls,
+  .controls__column {
+    display: contents;
+  }
+
+  .lights {
+    grid-area: lights;
+    height: 64px;
+    margin-left: calc(var(--space-4) * -1 - 3px);
+  }
+
+  .visor {
+    grid-area: visor;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    margin: 0 calc(var(--space-4) * -1);
+    padding-bottom: var(--space-3);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .visor__content {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .visor__row {
+    padding-block: var(--space-2);
+  }
+
+  .screen--main {
+    flex: 1;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .screen--info {
+    grid-area: info;
+  }
+
+  .screen--secondary {
+    grid-area: readout;
+  }
+
+  .screen--info,
+  .screen--secondary {
+    height: 96px;
+    aspect-ratio: auto;
+  }
+
+  .info-readout,
+  #secondary-screen:not(:empty) {
+    padding: var(--space-3) var(--space-4);
+    font-size: small;
+  }
+
+  .type-screens {
+    grid-area: types;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .screen--type {
+    flex: 1;
+    aspect-ratio: auto;
+  }
+
+  .keyboard {
+    display: none;
+  }
+
+  #CONFIRM {
+    grid-area: confirm;
+    position: static;
+  }
+
+  .controls__row {
+    grid-area: pills;
+    align-self: center;
+    gap: var(--space-3);
+
+    & .button--pill {
+      flex: 1;
+    }
+  }
+
+  .d-pad {
+    grid-area: dpad;
+    position: static;
+    width: 132px;
+  }
+
+  .aux-buttons {
+    grid-area: aux;
+
+    /* The LED goes left, the L and R buttons right. */
+    & img {
+      order: -1;
+      width: 40px;
+      margin: 0 auto 0 0;
+    }
+  }
+
+  #L,
+  #R {
+    width: 56px;
+    height: 40px;
+  }
+
+  .screen-buttons {
+    grid-area: pages;
+    margin-top: 0;
+  }
+}
